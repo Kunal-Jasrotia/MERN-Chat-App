@@ -5,6 +5,7 @@ import { VStack } from "@chakra-ui/layout";
 import { useState } from "react";
 import { useToast } from '@chakra-ui/react'
 import { post } from '../../api/fetch'
+import { useHistory } from "react-router";
 
 const Signup = () => {
   let toast = useToast()
@@ -15,6 +16,7 @@ const Signup = () => {
   const [password, setPassword] = useState();
   const [pic, setPic] = useState();
   const [loading, setLoading] = useState(false)
+  const history = useHistory()
   const submitHandler = async () => {
     setLoading(true)
     if (!name || !email || !password || !confirmpassword) {
@@ -47,6 +49,8 @@ const Signup = () => {
         position: "top"
       })
       setLoading(false)
+      localStorage.setItem("userInfo", JSON.stringify(data))
+      history.push("/chats");
     } else {
       toast({
         title: "Sign Up Failed",
@@ -57,8 +61,6 @@ const Signup = () => {
       })
       setLoading(false)
     }
-    localStorage.setItem("userInfo", JSON.stringify(data))
-    console.log(data);
   };
 
   const postDetails = (pics) => {
