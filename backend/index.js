@@ -20,8 +20,9 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 
 const userRoute = require('./routes/user');
-const e = require('express');
 app.use('/api/user', userRoute)
+const chatRoute = require('./routes/chat');
+app.use('/api/chat', chatRoute)
 
 app.get('/', (req, res) => {
     console.log('/');

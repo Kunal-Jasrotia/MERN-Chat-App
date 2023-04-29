@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/userModel')
 const generateToken = require('../config/generateToken')
+const auth = require('../config/auth')
+
 router.post('/', async (req, res) => {
     const { name, email, password, pic } = req.body
 
@@ -50,8 +52,19 @@ router.post('/login', async (req, res) => {
         });
     } else {
         res.status(401);
-        throw new Error("Invalid Email or Password");
     }
 
+})
+
+router.get('/', auth, async (req, res) => {
+    const keyword = req.query.search ? {
+        $or: [
+            { name: { $regex: req.query.search, $options: "i" } },
+            { email: { $regex: req.query.search, $options: "i" } },
+        ]
+    } : {}
+
+    const users = await User.find(keyword).find({ _id: { $ne: req.user._id } })
+    res.send(users)
 })
 module.exports = router

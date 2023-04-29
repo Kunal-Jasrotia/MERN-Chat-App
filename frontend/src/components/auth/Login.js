@@ -4,7 +4,7 @@ import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
 import { useState } from "react";
 import { useToast } from "@chakra-ui/react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { post } from '../../api/fetch'
 
 
@@ -14,7 +14,7 @@ const Login = () => {
     const [password, setPassword] = useState();
     const [loading, setLoading] = useState(false);
     const toast = useToast()
-    const history = useHistory()
+    const navigate = useNavigate()
 
     const submitHandler = async () => {
         setLoading(true)
@@ -40,7 +40,7 @@ const Login = () => {
             });
             localStorage.setItem("userInfo", JSON.stringify(data));
             setLoading(false);
-            history.push("/chats");
+            navigate("/chats");
         } else {
             toast({
                 title: "Error Occured!",
@@ -55,7 +55,7 @@ const Login = () => {
     };
 
     return (
-        <VStack spacing="10px">
+        <VStack spacing="10px" >
             <FormControl id="email" isRequired>
                 <FormLabel>Email Address</FormLabel>
                 <Input
