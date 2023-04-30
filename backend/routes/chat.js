@@ -102,7 +102,7 @@ router.post("/group", auth, async (req, res) => {
     }
 })
 
-router.put('/rename', auth, async (req, res) => {
+router.post('/rename', auth, async (req, res) => {
     const { chatId, chatName } = req.body
 
     const updatedChat = await Chat.findByIdAndUpdate(
@@ -124,7 +124,7 @@ router.put('/rename', auth, async (req, res) => {
         res.json(updatedChat);
     }
 })
-router.put('/groupremove', auth, async (req, res) => {
+router.post('/groupremove', auth, async (req, res) => {
     const { chatId, userId } = req.body
     const removed = await Chat.findByIdAndUpdate(
         chatId,
@@ -142,7 +142,7 @@ router.put('/groupremove', auth, async (req, res) => {
         res.json(removed);
     }
 })
-router.put('/groupadd', auth, async (req, res) => {
+router.post('/groupadd', auth, async (req, res) => {
     const { chatId, userId } = req.body;
 
     const added = await Chat.findByIdAndUpdate(
